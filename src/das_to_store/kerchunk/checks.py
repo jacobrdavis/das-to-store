@@ -18,10 +18,9 @@ def find_inconsistent_dimension_sizes(
 
     baseline_sizes = get_file_dimension_sizes(baseline_ref, group=group)
 
-
     inconsistent_refs = []
     inconsistent_sizes = []
-    for ref in ref_files[1:]:
+    for ref in ref_files:
         sizes = get_file_dimension_sizes(ref, group=group)
 
         if sizes != baseline_sizes:
