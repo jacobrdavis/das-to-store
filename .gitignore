@@ -1,3 +1,13 @@
+# Local files
+.DS_Store
+*.out
+*.err
+scraps/
+TODO.md
+
+# VS Code settings
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
