@@ -2,7 +2,7 @@
 #SBATCH --job-name=kerchunk_das-onyx      	 # Job name
 #SBATCH --output=%x_%j.out          	     # Standard output file
 #SBATCH --error=%x_%j.err 	   	             # Standard error file
-#SBATCH --mem=128G			                 # Total amount of memory
+#SBATCH --mem=200G			                 # Total amount of memory
 #SBATCH --nodes=1   			             # Number of nodes
 #SBATCH --ntasks-per-node=1 		         # Number of tasks per node
 #SBATCH --cpus-per-task=1 		             # Number of CPU cores per task

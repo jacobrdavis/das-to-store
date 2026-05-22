@@ -69,9 +69,6 @@ if COMBINE_REFS:
     json_list = fs_local.glob(str(REF_DIR / "*.json"))
     json_list = [f for f in json_list if COMBINED_REF_FILENAME not in f]
 
-    # TODO: temp:
-    json_list = json_list[:1000]
-
     logger.info(f'Number of JSON files found: {len(json_list)}')
 
     # Remove any JSON files with inconsistent dimension sizes before
@@ -91,7 +88,6 @@ if COMBINE_REFS:
     good_json_list = [f for f in json_list if str(f) not in bad_set]
 
     logger.info(f'Number of consistent JSON files found: {len(good_json_list)}')
-
 
     logger.info(f'Generating combined JSON reference file in {REF_DIR} ...')
 
