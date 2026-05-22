@@ -7,7 +7,9 @@ from tqdm.notebook import tqdm
 
 from das_to_store.kerchunk.generate import generate_json
 from das_to_store.kerchunk.combine import combine_jsons
+from das_to_store.kerchunk.checks import find_inconsistent_dimension_sizes
 from das_to_store.interrogators.sintela import SintelaOnyxMultiZarrToZarrConfig
+
 
 # Path to data files.
 MVCO_DAS_PATH = '/proj/das-onyx/mvco_2023-2024/'
@@ -58,10 +60,23 @@ if COMBINE_REFS:
 
     print(f'Number of JSON files found: {len(json_list)}')
 
+    # Remove any JSON files with inconsistent dimension sizes before
+    # combining. The first file is used as the baseline for comparison.
+    baseline_ref, baseline_sizes, inconsistent_refs, inconsistent_sizes \
+        = find_inconsistent_dimension_sizes(
+        ref_files=json_list,
+        baseline_ref=json_list[0],
+        group="Acquisition/Raw[0]",
+    )
+    good_json_list = [f for f in json_list if f not in str(inconsistent_refs)]
+
+    print(f'Number of consistent JSON files found: {len(good_json_list)}')
+
+
     print(f'Generating combined JSON reference file in {REF_DIR} ...')
 
     combine_jsons(
-        json_list=json_list,
+        json_list=good_json_list,
         fs_local=fs_local,
         mzz_config=SintelaOnyxMultiZarrToZarrConfig(),
         remote_protocol='file',
