@@ -7,7 +7,7 @@ from tqdm.notebook import tqdm
 
 from das_to_store.kerchunk.generate import generate_json
 from das_to_store.kerchunk.combine import combine_jsons
-from das_to_store.kerchunk.checks import find_inconsistent_dimension_sizes
+from das_to_store.kerchunk.checks import find_inconsistent_dimension_sizes, inconsistent_dimension_sizes_to_csv
 from das_to_store.interrogators.sintela import SintelaOnyxMultiZarrToZarrConfig
 
 
@@ -67,6 +67,11 @@ if COMBINE_REFS:
         ref_files=json_list,
         baseline_ref=json_list[0],
         group="Acquisition/Raw[0]",
+    )
+    inconsistent_dimension_sizes_to_csv(
+        inconsistent_refs=inconsistent_refs,
+        inconsistent_sizes=inconsistent_sizes,
+        output_file= REF_DIR / (DATA_DIR.name + '_inconsistent_refs.csv'),
     )
     good_json_list = [f for f in json_list if f not in str(inconsistent_refs)]
 

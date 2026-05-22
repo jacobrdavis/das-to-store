@@ -1,5 +1,6 @@
 from typing import Optional, Union
 
+import pandas as pd
 from pathlib import Path
 
 from das_to_store.kerchunk.refs import get_file_dimension_sizes
@@ -29,3 +30,17 @@ def find_inconsistent_dimension_sizes(
 
     return baseline_ref, baseline_sizes, inconsistent_refs, inconsistent_sizes
 
+
+def inconsistent_dimension_sizes_to_csv(
+    inconsistent_refs: list[Path],
+    inconsistent_sizes: list[dict[str, int]],
+    output_file: Union[str, Path] = 'inconsistent_refs.csv',
+) -> None:
+    rows = []
+    for ref, sizes in zip(inconsistent_refs, inconsistent_sizes):
+        row = {"file": str(ref.name)}
+        row.update(sizes)
+        rows.append(row)
+
+    df = pd.DataFrame(rows)
+    df.to_csv(output_file, index=False)
