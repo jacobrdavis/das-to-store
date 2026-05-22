@@ -36,8 +36,11 @@ def combine_jsons(
 
     json_dict = mzz.translate()
 
-    with fs_local.open(output_path, 'wb') as f:
-        f.write(ujson.dumps(json_dict).encode())
+    with fs_local.open(output_path, "w") as f:
+        ujson.dump(json_dict, f)
 
-
-
+    # Optionally, clean up memory after writing the combined JSON file.
+    # (Helpful if running multiple combines.)
+    # del json_dict
+    # del mzz
+    # gc.collect()
